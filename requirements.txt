@@ -1,0 +1,5 @@
+requests==2.20.0
+requests_toolbelt==0.8.0
+twitter==1.19.3
+sqlalchemy==1.4.31
+psycopg2==2.9.3
