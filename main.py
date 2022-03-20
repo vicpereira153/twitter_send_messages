@@ -24,8 +24,10 @@ def search_tweets(q, count=100, result_type="recent"):
 def send_message(message, q, count, postgres_connection, result_type='recent'):
     result = search_tweets(q, USERS_PER_ROUND, result_type)
     sended_users = postgres_connection.get_all_user_already_in_tag(TAG)
+
+    print(f"searched results: {len(result['statuses'])}")
+
     count_sended = 0
-    print(f"users in db {sended_users}")
     for tweet in result["statuses"]:
         message_to_send = f"{message}"
         if int(tweet["user"]["id"]) not in sended_users:
@@ -47,7 +49,6 @@ def send_message(message, q, count, postgres_connection, result_type='recent'):
                 print(f"Aguardando {seconds} segundos para o próximo envio.")
                 time.sleep(seconds)
             except Exception as ex:
-                print(ex)
                 postgres_connection.insert_user_in_table(tweet["user"]["id"], q, message_to_send, False)
             if count_sended == count:
                 break

@@ -30,11 +30,5 @@ class PostgresConnection:
         try:
             self.db.execute(f"""INSERT INTO public."user"(user_id, tag, sended_message, sended) VALUES ({user_id}, '{tag}', '{sended_message}', {sended})""", insert_dict)
             self.db.commit()
-
         except Exception as ex:
             self.db.rollback()
-            raise f"Erro ao inserir: {ex}"
-
-
-        
-        
