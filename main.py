@@ -33,7 +33,10 @@ def send_message(message, q, count, postgres_connection, result_type='recent'):
 
         for tweet in result["statuses"]:
             message_to_send = f"{message}"
+            print(f"message: {message_to_send}")
+            
             if int(tweet["user"]["id"]) not in sended_users:
+                print(f"Tentando enviar mensagem para {tweet['user']['name']}.")
                 try:
                     t.direct_messages.events.new(
                     _json={
@@ -51,7 +54,8 @@ def send_message(message, q, count, postgres_connection, result_type='recent'):
                     seconds = random.randint(70, MAX_SECCONDS)
                     print(f"Aguardando {seconds} segundos para o próximo envio.")
                     time.sleep(seconds)
-                except Exception:
+                except Exception as ex:
+                    print(f"mensagem não enviada: {ex}")
                     postgres_connection.insert_user_in_table(tweet["user"]["id"], q, message_to_send, False)
                 if count_sended == count:
                     break
