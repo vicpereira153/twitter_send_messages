@@ -24,6 +24,11 @@ class PostgresConnection:
         result = self.db.execute(query, {'tag': tag}).fetchall()
         return [x[0] for x in result]
 
+    def get_all_user_sended(self):
+        query = "SELECT user_id FROM public.user"
+        result = self.db.execute(query).fetchall()
+        return [x[0] for x in result]
+
     def insert_user_in_table(self, user_id, tag, sended_message="", sended=True):
         insert_dict = {"user_id": user_id, "tag": tag, "sended_message": sended_message, "sended": sended}
 
