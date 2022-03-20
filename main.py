@@ -28,6 +28,7 @@ def send_message(message, q, count, postgres_connection, result_type='recent'):
         sended_users = postgres_connection.get_all_user_already_in_tag(TAG)
 
         print(f"searched results: {len(result['statuses'])}")
+        print(f"Sended users: {str(len(sended_users))}")
         if count_sended == count:
             break
 
